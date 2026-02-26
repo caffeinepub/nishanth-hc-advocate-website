@@ -1,0 +1,90 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-26T16:51:31.360Z",
+  "summary": "The diff implements a React + TypeScript SPA using TanStack Router (not React Router as specified), with all five pages, shared Layout/Navbar/Footer/WhatsAppFloat components, SEO, language switcher, animations, and forms. The implementation is largely complete but uses TanStack Router instead of the required React Router, the visual theme uses dark backgrounds instead of the specified white/off-white (#ffffff, #f8f8f5), and the footer copyright year is dynamic rather than hardcoded to 2026.",
+  "missing_requirements": [
+    {
+      "id": "REQ-17",
+      "requirement": "All routing must use React Router (client-side). The build request constraint explicitly states 'All routing must use React Router'.",
+      "reason": "The diff uses @tanstack/react-router throughout App.tsx, Navbar.tsx, Footer.tsx, Layout.tsx, and all page components instead of React Router (react-router-dom), violating the explicit constraint.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Navbar.tsx",
+        "frontend/src/components/Footer.tsx",
+        "frontend/src/components/Layout.tsx",
+        "frontend/src/pages/Home.tsx",
+        "frontend/src/pages/Cases.tsx"
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "requirement": "White/off-white backgrounds (#ffffff, #f8f8f5) are required for the premium visual theme.",
+      "reason": "The global stylesheet and Tailwind config define site-bg as #111111, site-dark as #0d0d0d, and site-card as #1a1a1a — all dark backgrounds. The specified white/off-white backgrounds (#ffffff, #f8f8f5) are absent.",
+      "evidence": [
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ]
+    },
+    {
+      "id": "REQ-18",
+      "requirement": "Copyright line must read exactly '© 2026 Nishanth HC Advocate. All Rights Reserved.'",
+      "reason": "Footer.tsx uses a dynamic year via new Date().getFullYear() instead of the hardcoded '2026' specified in the requirement.",
+      "evidence": [
+        "frontend/src/components/Footer.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "A 'Built with heart using caffeine.ai' attribution link is added in the footer.",
+      "reason": "The build request does not mention any caffeine.ai attribution or branding in the footer. This was not requested.",
+      "evidence": [
+        "frontend/src/components/Footer.tsx"
+      ]
+    },
+    {
+      "description": "An extra 'Book Now' CTA button is added to the desktop navbar in addition to the five standard navigation links.",
+      "reason": "REQ-18 specifies only navigation links 'Home | About | Cases | Appointment | Contact' with no mention of an additional 'Book Now' button in the navbar.",
+      "evidence": [
+        "frontend/src/components/Navbar.tsx"
+      ]
+    },
+    {
+      "description": "A dark theme with near-black backgrounds (#0d0d0d, #111111, #1a1a1a) is applied site-wide.",
+      "reason": "REQ-24 explicitly specifies white/off-white backgrounds (#ffffff, #f8f8f5). A dark theme was not requested anywhere in the build request.",
+      "evidence": [
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ]
+    },
+    {
+      "description": "A mobile 'Book Now' CTA link is added to the mobile hamburger dropdown menu.",
+      "reason": "REQ-18 specifies only the five navigation links in the mobile dropdown; no extra 'Book Now' button was requested.",
+      "evidence": [
+        "frontend/src/components/Navbar.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.78,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/App.tsx",
+    "frontend/src/components/Footer.tsx",
+    "frontend/src/components/Layout.tsx",
+    "frontend/src/components/Navbar.tsx",
+    "frontend/src/components/SEO.tsx",
+    "frontend/src/components/WhatsAppFloat.tsx",
+    "frontend/src/hooks/useCountUp.ts",
+    "frontend/src/hooks/useScrollReveal.ts",
+    "frontend/src/index.css",
+    "frontend/src/pages/About.tsx",
+    "frontend/src/pages/Appointment.tsx",
+    "frontend/src/pages/Cases.tsx",
+    "frontend/src/pages/Contact.tsx",
+    "frontend/src/pages/Home.tsx",
+    "frontend/src/utils/translations.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}
