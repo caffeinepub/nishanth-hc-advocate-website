@@ -1,18 +1,22 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 7,
-  "summary": "Professional 5-page advocate website for Advocate Nishanth H C (Nishanth HC Advocate) in Chikkamagaluru, Karnataka. Being rebuilt from scratch as a React + TypeScript app (replacing static HTML/CSS/JS) due to blank white screen rendering issues in preview. White/gold premium theme (#d4af37 accents). All 5 pages: Home, About, Cases, Appointment, Contact. Features: sticky navbar with NHC logo, WhatsApp appointment form, language switcher (EN/Kannada/Hindi) with localStorage, scroll reveal animations, 3D card effects, counter animation, glassmorphism, SEO meta + JSON-LD on all pages, Google Maps embed, pulsing WhatsApp float button.",
+  "projectStateVersion": 13,
+  "summary": "Professional 5-page advocate website for Advocate Nishanth H C (Nishanth HC Advocate) in Chikkamagaluru, Karnataka. React + TypeScript SPA with React Router. Premium white theme (#ffffff base, #f8f9fb alternating sections, #d4af37 gold accents). Navbar shows image logo (https://i.postimg.cc/RV0rRf2D/Whats-App-Image-2026-02-26-at-7-46-51-PM.jpg) top-left. Full name 'Advocate Nishanth H C' appears only in hero section. No dark/black backgrounds anywhere including footer (white/light grey). Book Appointment button uses premium green (#25D366). Water-wave scroll animations (fade + translateY, 0.8s ease). Soft white gradient overlay on hero. White glassmorphism cards with border-radius 12px+. Kannada text uses 'ವಕೀಲರು' (correct plural). All 5 pages: Home, About, Cases, Appointment, Contact. Features: sticky navbar, WhatsApp appointment form, language switcher (EN/Kannada/Hindi) with localStorage, floating water-wave scroll animations, glassmorphism cards, counter animation, Google Maps embed, pulsing WhatsApp float button, SEO meta + JSON-LD.",
   "architectural_notes": [
     "WhatsApp form submission opens wa.me/919482929768 with encoded appointment message",
     "Language switcher (EN/Kannada/Hindi) uses JS innerHTML swap, no page reload",
     "Scroll reveal uses Intersection Observer API; 3D tilt uses mousemove on cards",
     "All images loaded from postimg.cc URLs with JS error fallback handling",
     "JSON-LD LegalService structured data and Open Graph tags on every page",
-    "Favicon uses inline SVG data URI with NHC gold text on dark circle",
     "Project rebuilt as React + TypeScript SPA (replacing static HTML/CSS/JS) to fix blank white screen rendering in preview",
-    "React Router used for client-side routing; default route '/' loads Home page"
+    "React Router used for client-side routing; default route '/' loads Home page",
+    "Navbar logo is an <img> tag pointing to https://i.postimg.cc/RV0rRf2D/Whats-App-Image-2026-02-26-at-7-46-51-PM.jpg (not SVG/text NHC)",
+    "Theme is premium white (#ffffff/#f8f9fb); no dark overlays or dark footer anywhere; Book Appointment button uses green #25D366",
+    "Service cards on Home page navigate to /appointment with auto-scroll to booking form section on load"
   ],
-  "known_issues": [],
+  "known_issues": [
+    "Live site not reflecting Version 4 changes (white theme, image logo, green buttons) — rebuild and redeploy required"
+  ],
   "isFixRequest": true,
   "existing_features": [
     {
@@ -190,9 +194,168 @@
         "REQ-24"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-components-navbar-tsx-replace-any-existing-nhc-text-svg-logo-with-an-img-element-using-src-https-i-postimg-cc-rv0rrf2d-whats-app-image-2026-02-26-at-7-46-51-pm-jpg-height-48px-auto-width-and-object-fit-contain-remove-all-nhc-text-based-logo-markup-from-the-navbar-entirely-this-change-must-be-reflected-across-all-pages-via-the-shared-layout-navbar-component",
+      "title": "In frontend/src/components/Navbar.tsx, replace any existing NHC text/SVG logo with an <img> element using src='https://i.postimg.cc/RV0rRf2D/Whats-App-Image-2026-02-26-at-7-46-51-PM.jpg', height 48px, auto width, and object-fit: contain. Remove all NHC text-based logo markup from the navbar entirely. This change must be reflected across all pages via the shared Layout/Navbar component.",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-full-premium-white-theme-across-all-react-page-components-and-global-stylesheets-set-all-page-and-section-backgrounds-to-ffffff-or-f8f9fb-no-black-dark-or-near-dark-backgrounds-anywhere-including-the-footer-navbar-scrolled-state-hero-overlays-and-cards-set-heading-color-to-1a1a1a-subheadings-to-333333-body-text-to-555555-apply-gold-d4af37-accents-to-borders-underlines-icons-badges-and-hover-states-update-frontend-src-index-css-and-tailwind-config-js-to-enforce-these-values-site-wide-so-the-changes-persist-in-production",
+      "title": "Apply a full premium white theme across all React page components and global stylesheets. Set all page and section backgrounds to #ffffff or #f8f9fb — no black, dark, or near-dark backgrounds anywhere, including the footer, navbar (scrolled state), hero overlays, and cards. Set heading color to #1a1a1a, subheadings to #333333, body text to #555555. Apply gold #d4af37 accents to borders, underlines, icons, badges, and hover states. Update frontend/src/index.css and tailwind.config.js to enforce these values site-wide so the changes persist in production.",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-every-book-appointment-and-book-now-cta-button-across-all-pages-home-hero-cases-cta-section-navbar-book-now-button-to-use-background-color-25d366-with-hover-state-1da851-and-a-subtle-green-glow-box-shadow-on-hover-the-whatsapp-now-button-and-floating-whatsapp-button-should-also-remain-green-25d366-ensure-these-color-values-are-hard-coded-in-the-component-styles-or-tailwind-config-so-they-are-not-overridden-by-any-dark-theme-defaults",
+      "title": "Update every 'Book Appointment' and 'Book Now' CTA button across all pages (Home hero, Cases CTA section, Navbar 'Book Now' button) to use background color #25D366 with hover state #1da851 and a subtle green glow box-shadow on hover. The 'WhatsApp Now' button and floating WhatsApp button should also remain green (#25D366). Ensure these color values are hard-coded in the component styles or Tailwind config so they are not overridden by any dark-theme defaults.",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-dark-black-hero-overlay-on-all-pages-with-a-soft-white-gradient-overlay-linear-gradient-from-rgba-255-255-255-0-45-at-the-bottom-to-transparent-at-the-top-to-maintain-text-readability-without-darkening-the-hero-background-image-ensure-hero-heading-text-remains-legible-by-using-dark-text-colors-1a1a1a-or-ffffff-as-appropriate-with-a-subtle-text-shadow-if-needed",
+      "title": "Replace dark/black hero overlay on all pages with a soft white gradient overlay (linear-gradient from rgba(255,255,255,0.45) at the bottom to transparent at the top) to maintain text readability without darkening the hero background image. Ensure hero heading text remains legible by using dark text colors (#1a1a1a or #ffffff as appropriate) with a subtle text-shadow if needed.",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-all-service-cards-stat-cards-and-contact-cards-across-all-react-page-components-to-use-white-glassmorphism-styling-background-rgba-255-255-255-0-75-backdrop-filter-blur-12px-border-1px-solid-rgba-212-175-55-0-15-border-radius-at-least-12px-and-soft-box-shadow-0-4px-24px-rgba-0-0-0-0-07-ensure-no-dark-or-near-black-card-backgrounds-remain-anywhere",
+      "title": "Update all service cards, stat cards, and contact cards across all React page components to use white glassmorphism styling: background rgba(255,255,255,0.75), backdrop-filter: blur(12px), border 1px solid rgba(212,175,55,0.15), border-radius at least 12px, and soft box-shadow 0 4px 24px rgba(0,0,0,0.07). Ensure no dark or near-black card backgrounds remain anywhere.",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-pages-cases-tsx-fix-the-hero-section-background-image-url-https-i-postimg-cc-ncl4hcq9-whats-app-image-2026-02-26-at-6-16-08-pm-1-jpg-so-it-renders-correctly-properly-encode-the-parentheses-in-the-url-replace-with-28-and-with-29-when-used-in-a-css-background-image-or-inline-style-ensure-the-image-renders-with-object-fit-cover-includes-descriptive-alt-text-if-used-as-an-img-and-does-not-have-lazy-loading-attributes-that-could-prevent-it-from-displaying-in-the-hero-section",
+      "title": "In frontend/src/pages/Cases.tsx, fix the hero section background image URL https://i.postimg.cc/ncL4hcQ9/Whats_App_Image_2026_02_26_at_6_16_08_PM_(1).jpg so it renders correctly. Properly encode the parentheses in the URL (replace '(' with '%28' and ')' with '%29') when used in a CSS background-image or inline style. Ensure the image renders with object-fit: cover, includes descriptive alt text if used as an <img>, and does not have lazy-loading attributes that could prevent it from displaying in the hero section.",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-pages-home-tsx-and-frontend-src-pages-cases-tsx-if-service-cards-appear-there-add-an-onclick-handler-to-all-five-service-cards-civil-criminal-family-property-documentation-that-navigates-to-appointment-using-the-react-router-navigate-function-and-then-calls-window-scrollto-0-0-to-land-at-the-top-of-the-appointment-page-which-contains-the-booking-form",
+      "title": "In frontend/src/pages/Home.tsx (and frontend/src/pages/Cases.tsx if service cards appear there), add an onClick handler to all five service cards (Civil, Criminal, Family, Property, Documentation) that navigates to /appointment using the React Router navigate function and then calls window.scrollTo(0, 0) to land at the top of the Appointment page (which contains the booking form).",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-every-internal-navigation-action-across-the-site-forces-a-scroll-to-top-in-frontend-src-app-tsx-or-a-dedicated-scroll-restoration-component-call-window-scrollto-0-0-on-every-route-change-using-a-router-level-effect-e-g-listening-to-the-router-location-pathname-additionally-ensure-that-the-onclick-handlers-on-navbar-links-the-book-now-button-service-card-clicks-and-any-other-programmatic-navigation-calls-window-scrollto-0-0-either-directly-in-the-handler-or-via-the-router-level-scroll-restoration",
+      "title": "Ensure every internal navigation action across the site forces a scroll-to-top. In frontend/src/App.tsx or a dedicated scroll-restoration component, call window.scrollTo(0, 0) on every route change using a router-level effect (e.g., listening to the router location/pathname). Additionally, ensure that the onClick handlers on navbar links, the 'Book Now' button, service card clicks, and any other programmatic navigation calls window.scrollTo(0, 0) either directly in the handler or via the router-level scroll restoration.",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
     }
   ],
-  "new_feature_requests": [],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Replace navbar NHC text/SVG logo with image https://i.postimg.cc/RV0rRf2D/Whats-App-Image-2026-02-26-at-7-46-51-PM.jpg across all pages",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Apply premium white theme: #ffffff base, #f8f9fb alternating sections, no black/dark backgrounds, light footer. Headings #1a1a1a, subheadings #333333, body #555555, gold accents #d4af37. Book Appointment button green #25D366 with glow. Water-wave scroll animations (fade+translateY 0.8s). Soft white gradient hero overlay. White glassmorphism cards border-radius 12px+. Full name only in hero. Fix Kannada 'ವಕೀಲ' to 'ವಕೀಲರು'.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Replace the navbar logo in frontend/src/components/Navbar.tsx with an <img> element using src='https://i.postimg.cc/RV0rRf2D/Whats-App-Image-2026-02-26-at-7-46-51-PM.jpg' and an appropriate height (e.g., 48px, auto width, object-fit: contain). Remove any existing text/SVG 'NHC' logo from the navbar. Retain the gold 'NHC' text branding only in the footer. Apply this change consistently across all pages via the shared Layout/Navbar component.",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Apply a full premium white theme across all React components and global stylesheets. Set page background to #ffffff, alternating section backgrounds to #f8f9fb. Remove all black or dark backgrounds everywhere including the footer (use #ffffff or #f8f9fb for footer). Set main heading color to #1a1a1a, subheadings to #333333, body text to #555555, gold accents to #d4af37. Update frontend/src/index.css and tailwind.config.js to enforce these color values site-wide.",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Update the 'Book Appointment' CTA button across all pages (Home hero, Cases CTA, Navbar 'Book Now') to use background color #25D366 (premium green) with a darker green hover state (#1da851) and a subtle green glow box-shadow on hover. The WhatsApp float button and 'WhatsApp Now' button should remain green as well.",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Replace the existing scroll reveal animations across all page components (Home, About, Cases, Appointment, Contact) with a water-wave style animation. Sections should softly rise from bottom to top using a smooth fade + translateY(30px → 0) transition with duration 0.8s ease and no bounce or elastic effects. Update the useScrollReveal hook or animation CSS classes to implement this style. Apply to all section-level elements and cards.",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "On the hero sections of all pages, remove dark/black overlay and replace with a soft white gradient overlay (e.g., linear-gradient from rgba(255,255,255,0.55) at bottom to transparent at top, or a subtle white-to-transparent vignette) to maintain text readability over the background image without darkening the scene.",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Refine the layout and card styling across all pages: increase vertical padding/margin between sections for more breathing room, apply softer box shadows (e.g., 0 4px 24px rgba(0,0,0,0.07)), update all service/stat/contact cards to use white glassmorphism (background: rgba(255,255,255,0.75), backdrop-filter: blur(12px), subtle border: 1px solid rgba(212,175,55,0.15)), and ensure all cards have border-radius of at least 12px.",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Ensure 'Advocate Nishanth H C' as the full name appears ONLY in the main hero center section on each page. Remove any repeated full name occurrences from navbar, section headers outside the hero, or other non-hero areas. The navbar should display only the logo image (from REQ-25).",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "In frontend/src/utils/translations.ts, audit all Kannada (kn) translation strings and replace every occurrence of 'ವಕೀಲ' (singular) with the correct plural professional form 'ವಕೀಲರು'. Ensure all other Kannada grammar is contextually correct throughout the translation object.",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Image fix: properly encode and display https://i.postimg.cc/ncL4hcQ9/Whats_App_Image_2026_02_26_at_6_16_08_PM_(1).jpg on Cases page hero with object-fit:cover, alt text, no lazy-load issues",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Service card click action: all 5 service cards (Civil, Criminal, Family, Property, Documentation) navigate to /appointment and auto-scroll to booking form",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Page load position fix: force window.scrollTo(0,0) on every navigation (navbar links, service card clicks, internal routing) so pages always load from top",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
   "gameProjectType": "none",
   "projectName": "Nishanth HC Advocate Website",
   "clarification_mode": "instant",

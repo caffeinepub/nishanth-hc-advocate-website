@@ -45,7 +45,10 @@ export default function About() {
       />
 
       {/* Hero Banner */}
-      <section className="bg-site-dark py-20 border-b border-gold/20">
+      <section
+        style={{ backgroundColor: '#f8f9fb', borderBottom: '1px solid rgba(212,175,55,0.2)' }}
+        className="py-20"
+      >
         <div
           ref={heroRef}
           className={`max-w-4xl mx-auto px-4 text-center transition-all duration-700 ${
@@ -55,7 +58,7 @@ export default function About() {
           <div className="inline-block px-4 py-1 border border-gold/50 rounded-full text-gold text-xs font-inter mb-4 tracking-widest uppercase">
             About
           </div>
-          <h1 className="font-playfair text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="font-playfair text-4xl md:text-5xl font-bold mb-4" style={{ color: '#1a1a1a' }}>
             About Advocate Nishanth H C
           </h1>
           <div className="w-20 h-1 bg-gold mx-auto rounded-full" />
@@ -63,7 +66,7 @@ export default function About() {
       </section>
 
       {/* Bio Section */}
-      <section className="py-20 bg-site-bg">
+      <section style={{ backgroundColor: '#ffffff' }} className="py-20">
         <div
           ref={bioRef}
           className={`max-w-7xl mx-auto px-4 transition-all duration-700 ${
@@ -81,56 +84,73 @@ export default function About() {
                   onError={() => setImg1Error(true)}
                 />
               ) : (
-                <div className="w-full h-80 rounded-2xl border-2 border-gold/40 bg-site-card flex items-center justify-center">
+                <div
+                  className="w-full h-80 rounded-2xl flex items-center justify-center"
+                  style={{ border: '2px solid rgba(212,175,55,0.4)', backgroundColor: '#f8f9fb' }}
+                >
                   <span className="text-gold font-playfair text-xl">Advocate Nishanth H C</span>
                 </div>
               )}
-              <div className="absolute -bottom-4 -right-4 bg-gold text-site-dark px-4 py-2 rounded-lg font-inter font-bold text-sm shadow-gold-glow">
+              <div
+                className="absolute -bottom-4 -right-4 px-4 py-2 rounded-lg font-inter font-bold text-sm"
+                style={{ backgroundColor: '#d4af37', color: '#1a1a1a', boxShadow: '0 0 20px rgba(212,175,55,0.25)' }}
+              >
                 5+ Years Experience
               </div>
             </div>
 
             {/* Bio Content */}
             <div>
-              <h2 className="font-playfair text-3xl font-bold text-white mb-2">
+              <h2 className="font-playfair text-3xl font-bold mb-2" style={{ color: '#1a1a1a' }}>
                 Nishanth H C
               </h2>
-              <p className="text-gold font-inter font-semibold mb-1">Advocate & Legal Consultant</p>
+              <p className="font-inter font-semibold mb-1 text-gold">Advocate & Legal Consultant</p>
               <div className="w-16 h-0.5 bg-gold mb-6" />
 
-              <p className="text-gray-300 font-inter leading-relaxed mb-4">
+              <p className="font-inter leading-relaxed mb-4" style={{ color: '#555555' }}>
                 Advocate Nishanth H C is a dedicated legal professional based in Chikkamagaluru, Karnataka, with over 5 years of experience in providing comprehensive legal services to individuals and businesses.
               </p>
-              <p className="text-gray-300 font-inter leading-relaxed mb-6">
+              <p className="font-inter leading-relaxed mb-6" style={{ color: '#555555' }}>
                 With a strong foundation in civil, criminal, and family law, Advocate Nishanth H C is committed to delivering justice with integrity, diligence, and a client-first approach.
               </p>
 
-              <h3 className="font-playfair text-xl font-bold text-white mb-4">Areas of Practice</h3>
+              <h3 className="font-playfair text-xl font-bold mb-4" style={{ color: '#1a1a1a' }}>
+                Areas of Practice
+              </h3>
               <ul className="space-y-2 mb-6">
                 {practiceAreas.map((area) => (
-                  <li key={area} className="flex items-center gap-2 text-gray-300 font-inter text-sm">
+                  <li key={area} className="flex items-center gap-2 font-inter text-sm" style={{ color: '#555555' }}>
                     <CheckCircle className="w-4 h-4 text-gold flex-shrink-0" />
                     {area}
                   </li>
                 ))}
               </ul>
 
-              <div className="bg-site-card rounded-xl p-5 border border-white/10 space-y-3">
+              <div
+                className="rounded-xl p-5 space-y-3"
+                style={{
+                  background: 'rgba(255,255,255,0.85)',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
+                  border: '1px solid rgba(212,175,55,0.15)',
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.07)',
+                }}
+              >
                 <div className="flex items-start gap-2">
                   <MapPin className="w-4 h-4 text-gold mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-400 text-sm font-inter">
+                  <span className="text-sm font-inter" style={{ color: '#555555' }}>
                     #T, 6th Cross Road, Block 9, Ward No 2, Vasathi Badavane, Hiremgaluru, Chikkamagaluru, Karnataka
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-gold flex-shrink-0" />
-                  <a href="tel:+919482929768" className="text-gray-400 hover:text-gold text-sm font-inter transition-colors">
+                  <a href="tel:+919482929768" className="text-sm font-inter transition-colors hover:text-gold" style={{ color: '#555555' }}>
                     +91 94829 29768
                   </a>
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4 text-gold flex-shrink-0" />
-                  <a href="mailto:adv.nishanthhc@gmail.com" className="text-gray-400 hover:text-gold text-sm font-inter transition-colors">
+                  <a href="mailto:adv.nishanthhc@gmail.com" className="text-sm font-inter transition-colors hover:text-gold" style={{ color: '#555555' }}>
                     adv.nishanthhc@gmail.com
                   </a>
                 </div>
@@ -141,7 +161,7 @@ export default function About() {
       </section>
 
       {/* Second Image Section */}
-      <section className="py-16 bg-site-dark">
+      <section style={{ backgroundColor: '#f8f9fb' }} className="py-16">
         <div className="max-w-4xl mx-auto px-4">
           {!img2Error ? (
             <img
@@ -151,7 +171,10 @@ export default function About() {
               onError={() => setImg2Error(true)}
             />
           ) : (
-            <div className="w-full h-64 rounded-2xl border-2 border-gold/40 bg-site-card flex items-center justify-center">
+            <div
+              className="w-full h-64 rounded-2xl flex items-center justify-center"
+              style={{ border: '2px solid rgba(212,175,55,0.4)', backgroundColor: '#f8f9fb' }}
+            >
               <span className="text-gold font-playfair text-xl">Professional Photo</span>
             </div>
           )}
@@ -159,17 +182,26 @@ export default function About() {
       </section>
 
       {/* Quote Section */}
-      <section className="py-16 bg-site-bg">
+      <section style={{ backgroundColor: '#ffffff' }} className="py-16">
         <div
           ref={quoteRef}
           className={`max-w-3xl mx-auto px-4 transition-all duration-700 ${
             quoteVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
-          <div className="glassmorphism rounded-2xl p-10 text-center">
+          <div
+            className="rounded-2xl p-10 text-center"
+            style={{
+              background: 'rgba(255,255,255,0.85)',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              border: '1px solid rgba(212,175,55,0.2)',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.07)',
+            }}
+          >
             <div className="text-gold text-5xl font-playfair mb-4">"</div>
-            <p className="font-playfair text-xl text-white italic leading-relaxed mb-6">
-              Every client deserves not just legal representation, but a trusted advisor who stands by them through every step of their legal journey.
+            <p className="font-playfair text-xl italic leading-relaxed mb-6" style={{ color: '#1a1a1a' }}>
+              Every client deserves dedicated representation and honest counsel. That is the standard I hold myself to every day.
             </p>
             <div className="flex items-center justify-center gap-3">
               <div className="w-12 h-0.5 bg-gold" />

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useRouterState } from '@tanstack/react-router';
-import { Menu, X, Scale } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+
+const LOGO_URL = 'https://i.postimg.cc/RV0rRf2D/Whats-App-Image-2026-02-26-at-7-46-51-PM.jpg';
 
 const navLinks = [
   { path: '/' as const, label: 'Home' },
@@ -29,26 +31,42 @@ export default function Navbar() {
   const isActive = (path: string) =>
     path === '/' ? currentPath === '/' : currentPath.startsWith(path);
 
+  const handleNavClick = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <nav
+      style={{ backgroundColor: '#ffffff' }}
       className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled || isOpen
-          ? 'bg-site-dark shadow-lg'
-          : 'bg-site-dark/90 backdrop-blur-md'
+          ? 'shadow-md border-b border-gray-200'
+          : 'shadow-sm border-b border-gray-100'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 rounded-full bg-gold flex items-center justify-center shadow-gold-glow">
-              <Scale className="w-5 h-5 text-site-dark" />
-            </div>
-            <div className="leading-tight">
-              <div className="font-playfair font-bold text-gold text-sm tracking-wide">
-                NHC Advocate
+          {/* Logo Image */}
+          <Link to="/" onClick={handleNavClick} className="flex items-center">
+            <img
+              src={LOGO_URL}
+              alt="NHC Advocate — Nishanth H C"
+              style={{ height: '48px', width: 'auto', objectFit: 'contain' }}
+              onError={(e) => {
+                const target = e.currentTarget as HTMLImageElement;
+                target.style.display = 'none';
+                const fallback = target.nextElementSibling as HTMLElement | null;
+                if (fallback) fallback.style.display = 'flex';
+              }}
+            />
+            {/* Fallback text logo */}
+            <div className="hidden items-center gap-2">
+              <div className="leading-tight">
+                <div className="font-playfair font-bold text-gold text-sm tracking-wide">
+                  NHC Advocate
+                </div>
+                <div className="text-xs font-inter" style={{ color: '#555555' }}>Nishanth H C</div>
               </div>
-              <div className="text-xs text-gray-400 font-inter">Nishanth H C</div>
             </div>
           </Link>
 
@@ -58,18 +76,34 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
+                onClick={handleNavClick}
                 className={`px-4 py-2 rounded-md text-sm font-inter font-medium transition-all duration-200 ${
                   isActive(link.path)
-                    ? 'text-gold border-b-2 border-gold'
-                    : 'text-gray-300 hover:text-gold hover:bg-white/5'
+                    ? 'border-b-2 border-gold'
+                    : 'hover:bg-gray-50'
                 }`}
+                style={{
+                  color: isActive(link.path) ? '#d4af37' : '#1a1a1a',
+                }}
               >
                 {link.label}
               </Link>
             ))}
             <Link
               to="/appointment"
-              className="ml-3 px-4 py-2 bg-gold text-site-dark rounded-md text-sm font-inter font-semibold hover:bg-gold-light transition-all duration-200 shadow-gold-glow"
+              onClick={handleNavClick}
+              className="ml-3 px-4 py-2 rounded-md text-sm font-inter font-semibold text-white transition-all duration-200"
+              style={{
+                backgroundColor: '#25D366',
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.backgroundColor = '#1da851';
+                (e.currentTarget as HTMLElement).style.boxShadow = '0 0 16px rgba(37, 211, 102, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.backgroundColor = '#25D366';
+                (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+              }}
             >
               Book Now
             </Link>
@@ -77,7 +111,8 @@ export default function Navbar() {
 
           {/* Mobile Hamburger */}
           <button
-            className="md:hidden text-gray-300 hover:text-gold transition-colors p-2"
+            className="md:hidden transition-colors p-2"
+            style={{ color: '#1a1a1a' }}
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -88,23 +123,43 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-site-dark border-t border-gold/20 px-4 pb-4">
+        <div
+          className="md:hidden border-t px-4 pb-4"
+          style={{ backgroundColor: '#ffffff', borderColor: 'rgba(212,175,55,0.2)' }}
+        >
+          {/* Mobile Logo */}
+          <div className="py-3 flex justify-center border-b mb-2" style={{ borderColor: 'rgba(212,175,55,0.15)' }}>
+            <img
+              src={LOGO_URL}
+              alt="NHC Advocate"
+              style={{ height: '44px', width: 'auto', objectFit: 'contain' }}
+            />
+          </div>
           {navLinks.map((link) => (
             <Link
               key={link.path}
               to={link.path}
-              className={`block px-4 py-3 text-sm font-inter font-medium transition-colors border-b border-white/5 ${
-                isActive(link.path)
-                  ? 'text-gold'
-                  : 'text-gray-300 hover:text-gold'
-              }`}
+              onClick={handleNavClick}
+              className={`block px-4 py-3 text-sm font-inter font-medium transition-colors border-b`}
+              style={{
+                color: isActive(link.path) ? '#d4af37' : '#1a1a1a',
+                borderColor: 'rgba(0,0,0,0.05)',
+              }}
             >
               {link.label}
             </Link>
           ))}
           <Link
             to="/appointment"
-            className="block mt-3 px-4 py-3 bg-gold text-site-dark rounded-md text-sm font-inter font-semibold text-center hover:bg-gold-light transition-all"
+            onClick={handleNavClick}
+            className="block mt-3 px-4 py-3 rounded-md text-sm font-inter font-semibold text-center text-white transition-all"
+            style={{ backgroundColor: '#25D366' }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor = '#1da851';
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLElement).style.backgroundColor = '#25D366';
+            }}
           >
             Book Appointment
           </Link>

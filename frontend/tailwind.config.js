@@ -68,10 +68,13 @@ export default {
         },
         gold: '#d4af37',
         'gold-light': '#e8c84a',
-        'site-dark': '#0d0d0d',
-        'site-bg': '#111111',
-        'site-card': '#1a1a1a',
-        'site-text': '#f5f5f5',
+        'site-dark': '#1a1a1a',
+        'site-bg': '#ffffff',
+        'site-card': '#f8f9fb',
+        'site-text': '#1a1a1a',
+        'site-body': '#555555',
+        'whatsapp': '#25D366',
+        'whatsapp-dark': '#1da851',
       },
       fontFamily: {
         playfair: ['Playfair Display', 'serif'],
@@ -85,6 +88,7 @@ export default {
       boxShadow: {
         xs: '0 1px 2px 0 rgba(0,0,0,0.05)',
         'gold-glow': '0 0 20px rgba(212, 175, 55, 0.25)',
+        'green-glow': '0 0 16px rgba(37, 211, 102, 0.4)',
       },
       keyframes: {
         'accordion-down': {

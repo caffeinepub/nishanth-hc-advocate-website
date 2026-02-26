@@ -1,218 +1,66 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Rebuild Advocate Website as React + TypeScript SPA",
+  "title": "Fix Cases hero image, service card navigation, and page scroll-to-top",
   "requirements": [
     {
-      "id": "REQ-17",
-      "summary": "Rebuild the entire advocate website as a React + TypeScript single-page application with React Router for client-side routing, replacing static HTML files with functional React components for Home, About, Cases, Appointment, and Contact pages.",
+      "id": "REQ-38",
+      "summary": "Fix Cases page hero section background image by encoding parentheses in URL and ensuring proper rendering with object-fit cover",
       "acceptanceCriteria": [
-        "The Vite/React app compiles without errors",
-        "Navigating to '/' renders the Home page with visible content",
-        "Navigating to '/about', '/cases', '/appointment', '/contact' each renders their respective page with visible content",
-        "No blank white screens appear in draft or live preview panes",
-        "The app mounts from main.tsx into #root in frontend/index.html"
+        "The Cases page hero section displays the background image visually without a broken/blank area.",
+        "The URL used in the component has parentheses encoded as %28 and %29.",
+        "The image covers the full hero area with object-fit: cover.",
+        "No lazy-loading attribute is applied to the hero image element."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Cases.tsx",
+          "operation": "modify",
+          "description": "In the hero section, replace the background image URL https://i.postimg.cc/ncL4hcQ9/Whats_App_Image_2026_02_26_at_6_16_08_PM_(1).jpg with the properly URL-encoded version https://i.postimg.cc/ncL4hcQ9/Whats_App_Image_2026_02_26_at_6_16_08_PM_%281%29.jpg (parentheses encoded as %28 and %29). Ensure the background-image style includes object-fit: cover and that no lazy-loading attributes are present on the hero image element."
+        }
+      ]
+    },
+    {
+      "id": "REQ-39",
+      "summary": "Add onClick navigation to all five service cards (Civil, Criminal, Family, Property, Documentation) that redirects to /appointment and scrolls to top",
+      "acceptanceCriteria": [
+        "Clicking any of the five service cards (Civil, Criminal, Family, Property, Documentation) on the Home page navigates to the /appointment route.",
+        "After navigation, the page is scrolled to the top (window.scrollTo(0, 0)) so the booking form is visible.",
+        "All existing card styles, animations, and hover effects remain unchanged.",
+        "The click area covers the entire card, not just text."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Home.tsx",
+          "operation": "modify",
+          "description": "Import useNavigate from @tanstack/react-router. Add an onClick handler to all five service card container divs that calls navigate('/appointment') followed by window.scrollTo(0, 0). Ensure the entire card is clickable by applying cursor-pointer to the card container and preserving all existing hover effects, tilt animations, and styling."
+        },
+        {
+          "path": "frontend/src/pages/Cases.tsx",
+          "operation": "modify",
+          "description": "Import useNavigate from @tanstack/react-router. Add an onClick handler to all five service card container divs (Civil, Criminal, Family, Property, Documentation) that calls navigate('/appointment') followed by window.scrollTo(0, 0). Ensure the entire card is clickable by applying cursor-pointer to the card container and preserving all existing hover effects, tilt animations, and styling."
+        }
+      ]
+    },
+    {
+      "id": "REQ-40",
+      "summary": "Implement global scroll-to-top on every route change and navigation action across the site",
+      "acceptanceCriteria": [
+        "Navigating to any page via the navbar always starts the page at scroll position 0.",
+        "Navigating via service card clicks starts the destination page at scroll position 0.",
+        "Navigating via any CTA button (Book Appointment, Need Legal Help?, etc.) starts the destination page at scroll position 0.",
+        "No page ever opens mid-scroll after a navigation action."
       ],
       "file_operations": [
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Replace the placeholder App component with a React Router setup using BrowserRouter, Routes, and Route components to define client-side routes for '/' (Home), '/about', '/cases', '/appointment', and '/contact'. Wrap all routes in the shared Layout component. Import React Router from react-router-dom and all page components."
-        },
-        {
-          "path": "frontend/src/pages/Home.tsx",
-          "operation": "create",
-          "description": "Create the Home page component that will be rendered at the '/' route. This file will contain the complete Home page structure (detailed in REQ-19)."
-        },
-        {
-          "path": "frontend/src/pages/About.tsx",
-          "operation": "create",
-          "description": "Create the About page component that will be rendered at the '/about' route. This file will contain the complete About page structure (detailed in REQ-20)."
-        },
-        {
-          "path": "frontend/src/pages/Cases.tsx",
-          "operation": "create",
-          "description": "Create the Cases page component that will be rendered at the '/cases' route. This file will contain the complete Cases/Services page structure (detailed in REQ-21)."
-        },
-        {
-          "path": "frontend/src/pages/Appointment.tsx",
-          "operation": "create",
-          "description": "Create the Appointment page component that will be rendered at the '/appointment' route. This file will contain the complete Appointment booking form structure (detailed in REQ-22)."
-        },
-        {
-          "path": "frontend/src/pages/Contact.tsx",
-          "operation": "create",
-          "description": "Create the Contact page component that will be rendered at the '/contact' route. This file will contain the complete Contact page structure (detailed in REQ-23)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-18",
-      "summary": "Create a shared React Layout component with sticky navbar (logo, navigation links, hamburger menu, scroll state), pulsing WhatsApp float button, and footer with full contact details.",
-      "acceptanceCriteria": [
-        "Sticky navbar is visible on all five pages",
-        "Active page link is highlighted in gold",
-        "Hamburger menu toggles on mobile (≤768px)",
-        "Navbar becomes opaque when scrolled more than 50px",
-        "Pulsing WhatsApp float button is present on all pages",
-        "Footer displays full address, clickable phone and email on all pages"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/Layout.tsx",
-          "operation": "create",
-          "description": "Create the Layout component that wraps all pages with: (1) Navbar component at the top with sticky positioning; (2) React Router Outlet or children prop for page content; (3) WhatsAppFloat component positioned fixed bottom-right; (4) Footer component at the bottom. Use React.ReactNode for children prop."
+          "description": "Add a useEffect hook that listens to router.state.location.pathname changes. Inside the effect, call window.scrollTo(0, 0) to force scroll-to-top on every route change. This ensures that all navigation actions (navbar, service cards, programmatic navigation) start the destination page at the top."
         },
         {
           "path": "frontend/src/components/Navbar.tsx",
-          "operation": "create",
-          "description": "Create the Navbar component with: (1) NHC logo styled in gold (#d4af37) positioned top-left; (2) Navigation links using React Router Link components for Home, About, Cases, Appointment, Contact with active link detection via useLocation hook and gold highlight; (3) Hamburger menu icon visible only on screens ≤768px using Tailwind breakpoints; (4) Mobile dropdown menu with useState toggle; (5) Scroll state detection using useEffect with window scroll listener to add opaque background when scrollY > 50px; (6) Sticky positioning (position: sticky, top: 0) with high z-index."
-        },
-        {
-          "path": "frontend/src/components/WhatsAppFloat.tsx",
-          "operation": "create",
-          "description": "Create the WhatsAppFloat component as a fixed position button (bottom-right with appropriate spacing) linking to https://wa.me/919482929768. Apply pulsing animation using Tailwind animate-pulse or custom CSS keyframes. Use a WhatsApp icon (SVG or icon library) and style with gold accent colors."
-        },
-        {
-          "path": "frontend/src/components/Footer.tsx",
-          "operation": "create",
-          "description": "Create the Footer component with: (1) Three-column layout: left column with NHC logo in gold, center column with quick navigation links using React Router Link components (Home, About, Cases, Appointment, Contact), right column with full contact details (address: 'Nishanth HC Advocate, #T, 6th Cross Road, Block 9, Ward No 2, Vasathi Badavane, Hiremgaluru, Chikkamagaluru, Karnataka, India', phone: '+91 94829 29768' as clickable tel:+919482929768, email: 'adv.nishanthhc@gmail.com' as clickable mailto link); (2) Gold horizontal divider above copyright; (3) Copyright text '© 2026 Nishanth HC Advocate. All Rights Reserved.' centered below divider. Make layout responsive (stack columns on mobile)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-19",
-      "summary": "Create the Home page React component with SEO meta tags, full-screen hero section with background image, language switcher, animated stats section, services cards with 3D tilt hover, and scroll reveal animations.",
-      "acceptanceCriteria": [
-        "Hero image loads from the specified postimg.cc URL with a dark overlay visible",
-        "onerror fallback shows a gold-bordered placeholder if the image fails",
-        "Language switcher buttons EN / ಕನ್ನಡ / हिंदी are visible and change text without page reload",
-        "Selected language persists in localStorage across navigations",
-        "Stats counters animate on scroll into view",
-        "Service cards show 3D tilt on mousemove and gold border on hover",
-        "Sections fade/slide in as they enter the viewport"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/Home.tsx",
           "operation": "modify",
-          "description": "Implement the Home page component with: (1) React Helmet for SEO meta tags including title 'Advocate Nishanth H C | Legal Services in Chikkamagaluru', description, keywords, Open Graph tags (og:title, og:description, og:type: website, og:image using hero image URL https://i.postimg.cc/dt02VtTd/Whats_App_Image_2026_02_26_at_6_16_08_PM.jpg), and JSON-LD LegalService structured data in a script tag; (2) Full-screen hero section with background image https://i.postimg.cc/dt02VtTd/Whats_App_Image_2026_02_26_at_6_16_08_PM.jpg using Tailwind bg-cover and bg-center, dark overlay via absolute positioned div with bg-black/60, animated heading 'Advocate Nishanth H C' using Playfair Display font, subheading '5+ Years of Legal Experience', tagline 'All Legal Services | Chikkamagaluru, Karnataka', two CTA buttons using React Router Link: 'Book Appointment' (gold filled, routes to /appointment) and 'WhatsApp Now' (gold outline, opens https://wa.me/919482929768 in new tab via anchor tag with target='_blank'), scroll indicator arrow at bottom; (3) Add onerror handler to hero background image that replaces src with a gold-bordered placeholder on failure; (4) Language switcher section with EN / ಕನ್ನಡ / हिंदी buttons using useState to track selected language, useEffect to load from localStorage on mount and save on change, translation object mapping page text keys to each language; (5) Stats section with four cards (5+ Years Experience, 500+ Cases Handled, 100% Dedication, All Legal Services) using glassmorphism styling (backdrop-filter: blur, semi-transparent bg, subtle border), animated counters using custom hook or useEffect with setInterval that increments from 0 to target number when section enters viewport via IntersectionObserver; (6) Services section with five cards (Civil ⚖️, Criminal 🛡️, Family 👨‍👩‍👧, Property 🏠, Documentation 📄) each with icon, title, description, 3D tilt effect via onMouseMove handler calculating rotation based on mouse position, gold border on hover via Tailwind hover:border-gold; (7) Scroll reveal animations on all sections using IntersectionObserver in useEffect to add visible class triggering fade/slide-in CSS transitions."
-        },
-        {
-          "path": "frontend/src/hooks/useScrollReveal.ts",
-          "operation": "create",
-          "description": "Create a custom React hook useScrollReveal that accepts a ref and returns a boolean indicating whether the element is in viewport. Use IntersectionObserver to detect when the ref element enters the viewport (threshold: 0.1). Return isVisible state. This hook will be used across multiple page components for scroll reveal animations."
-        },
-        {
-          "path": "frontend/src/hooks/useCountUp.ts",
-          "operation": "create",
-          "description": "Create a custom React hook useCountUp that accepts parameters (end: number, duration: number, isVisible: boolean) and returns the current count value. Use useEffect to animate the count from 0 to end over duration milliseconds when isVisible becomes true, using setInterval or requestAnimationFrame. This hook will be used for the stats counter animations on the Home page."
-        },
-        {
-          "path": "frontend/src/utils/translations.ts",
-          "operation": "create",
-          "description": "Create a translations utility file exporting a translations object with nested structure: { en: { [key: string]: string }, kn: { [key: string]: string }, hi: { [key: string]: string } }. Include translations for all Home page text content (hero heading, subheading, tagline, button labels, stats labels, service titles and descriptions) in English (en), Kannada (kn), and Hindi (hi). Export a type Language = 'en' | 'kn' | 'hi'."
-        }
-      ]
-    },
-    {
-      "id": "REQ-20",
-      "summary": "Create the About page React component with SEO meta tags, hero banner, two-column layout with professional images and bio content, glassmorphism quote block, and scroll reveal animations.",
-      "acceptanceCriteria": [
-        "About page renders at /about without blank screen",
-        "Both images load from the correct postimg.cc URLs with onerror fallbacks",
-        "Two-column layout is responsive (stacks on mobile)",
-        "Glassmorphism quote block has backdrop-filter blur styling",
-        "Scroll reveal animations trigger on viewport entry"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/About.tsx",
-          "operation": "modify",
-          "description": "Implement the About page component with: (1) React Helmet for SEO meta tags with unique title 'About Advocate Nishanth H C | Legal Services in Chikkamagaluru' and LegalService JSON-LD structured data; (2) Hero banner section with title 'About Advocate Nishanth H C' using Tailwind text-4xl and Playfair Display font; (3) Two-column layout using Tailwind grid (grid-cols-1 md:grid-cols-2 gap-8): left column with img tag src='https://i.postimg.cc/PrqW5r8P/Whats_App_Image_2026_02_26_at_6_16_07_PM.jpg' with onerror handler replacing src with gold-bordered placeholder, right column with professional title and gold underline, '5+ Years Experience' badge with gold background, professional bio paragraphs, areas of practice list with gold checkmark icons, Bar Council enrollment details, office address block with map pin icon, clickable phone link (href='tel:+919482929768' displaying '+91 94829 29768') and email link (href='mailto:adv.nishanthhc@gmail.com'); (4) Additional professional image section using img tag src='https://i.postimg.cc/RV0rRf2D/Whats-App-Image-2026-02-26-at-7-46-51-PM.jpg' with onerror handler; (5) Glassmorphism quote block with backdrop-filter: blur(10px), semi-transparent background, subtle border, containing a legal philosophy quote; (6) Apply useScrollReveal hook to all major sections for fade/slide-in animations via CSS transitions."
-        }
-      ]
-    },
-    {
-      "id": "REQ-21",
-      "summary": "Create the Cases page React component with SEO meta tags, hero banner with background image, five detailed service category cards with scroll reveal and 3D tilt effects, and CTA section linking to appointment page.",
-      "acceptanceCriteria": [
-        "Cases page renders at /cases without blank screen",
-        "Hero background image loads from the specified URL",
-        "Five service cards all display with correct icons and sub-items",
-        "3D tilt and scroll reveal animations work on the cards",
-        "CTA button navigates to /appointment"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/Cases.tsx",
-          "operation": "modify",
-          "description": "Implement the Cases page component with: (1) React Helmet for SEO meta tags with unique title 'Legal Services | Advocate Nishanth H C | Chikkamagaluru'; (2) Hero banner section with title 'Legal Services by Advocate Nishanth H C' and background image https://i.postimg.cc/ncL4hcQ9/Whats_App_Image_2026_02_26_at_6_16_08_PM_(1).jpg using Tailwind bg-cover and bg-center with dark overlay (bg-black/60); (3) Five service category cards in a responsive grid (grid-cols-1 md:grid-cols-2 lg:grid-cols-3): Civil Cases (⚖️ icon, title, description including property disputes, injunctions, recovery suits, civil appeals, execution petitions as bullet list), Criminal Defence (🛡️ icon, title, description including bail applications, criminal trials, anticipatory bail, sessions court matters), Family Law (👨‍👩‍👧 icon, title, description including divorce, maintenance, custody, adoption, domestic violence), Property & Registration (🏠 icon, title, description including sale deeds, gift deeds, property registration, title verification, encumbrance), Legal Documentation (📄 icon, title, description including legal notices, affidavits, agreements, power of attorney, contracts); (4) Apply useScrollReveal hook and 3D tilt hover effect via onMouseMove handler to each card, gold accent border on hover; (5) CTA section with heading 'Need Legal Help?' and button using React Router Link to='/appointment' with gold filled styling."
-        }
-      ]
-    },
-    {
-      "id": "REQ-22",
-      "summary": "Create the Appointment page React component with SEO meta tags, hero banner, two-column layout with contact info and validated appointment form that submits to WhatsApp with all fields encoded.",
-      "acceptanceCriteria": [
-        "Appointment page renders at /appointment without blank screen",
-        "All six form fields are present and functional",
-        "Submitting with empty fields shows inline error messages",
-        "Submitting a complete form opens the correct WhatsApp URL in a new tab with all fields encoded",
-        "Two-column layout stacks responsively on mobile"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/Appointment.tsx",
-          "operation": "modify",
-          "description": "Implement the Appointment page component with: (1) React Helmet for SEO meta tags with unique title 'Book Appointment | Advocate Nishanth H C'; (2) Hero banner with title 'Book Appointment with Advocate Nishanth H C'; (3) Two-column layout using Tailwind grid (grid-cols-1 md:grid-cols-2 gap-8): left column with contact info including phone '+91 94829 29768' as clickable tel:+919482929768 link, email 'adv.nishanthhc@gmail.com' as clickable mailto link, office hours 'Monday–Saturday 10:00 AM – 6:00 PM', 'Sunday By Appointment Only'; right column with appointment form using useState to manage form data and errors object; (4) Form fields: Full Name (text input, required), Phone Number (tel input, required), Preferred Date (date input, required), Case Type (select dropdown with options: Civil Case, Criminal Defence, Family Law, Property & Registration, Legal Documentation, Other; required), Message/Details (textarea, required), each with corresponding error message display below when validation fails; (5) Submit button 'Send via WhatsApp' with onSubmit handler that: validates all fields are non-empty and sets error messages in state for any missing field, constructs WhatsApp message exactly as 'Hello Advocate Nishanth H C, Name: [name], Phone: [phone], Date: [date], Case Type: [case type], Details: [message]', URL-encodes the full message using encodeURIComponent, opens https://wa.me/919482929768?text=ENCODED_MESSAGE in new tab via window.open with target='_blank'; (6) Display inline error messages in red text below each field when errors[fieldName] is truthy."
-        }
-      ]
-    },
-    {
-      "id": "REQ-23",
-      "summary": "Create the Contact page React component with SEO meta tags, hero banner, three-column glassmorphism info cards, full address block, embedded Google Maps iframe with accessibility attributes, and WhatsApp CTA section.",
-      "acceptanceCriteria": [
-        "Contact page renders at /contact without blank screen",
-        "Three info cards display with clickable phone and email links",
-        "Google Maps iframe loads the correct location embed",
-        "Map iframe has loading='lazy' and a title attribute",
-        "WhatsApp CTA section is visible below the map"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/Contact.tsx",
-          "operation": "modify",
-          "description": "Implement the Contact page component with: (1) React Helmet for SEO meta tags with unique title 'Contact | Advocate Nishanth H C | Chikkamagaluru'; (2) Hero banner with title 'Contact Nishanth HC Advocate'; (3) Three-column grid (grid-cols-1 md:grid-cols-3 gap-6) with glassmorphism styled cards (backdrop-filter: blur, semi-transparent bg, subtle border): Phone card with icon and phone number '+91 94829 29768' as clickable href='tel:+919482929768' link, Email card with icon and email 'adv.nishanthhc@gmail.com' as clickable href='mailto:adv.nishanthhc@gmail.com' link, WhatsApp card with icon and 'Click to Chat' button linking to https://wa.me/919482929768 in new tab; (4) Full address block section with heading and complete address: 'Nishanth HC Advocate, #T, 6th Cross Road, Block 9, Ward No 2, Vasathi Badavane, Hiremgaluru, Chikkamagaluru, Karnataka, India'; (5) Embedded Google Maps iframe with src='https://maps.google.com/maps?q=Vasathi+Badavane,+Hiremgaluru,+Chikkamagaluru,+Karnataka,+India&output=embed', width='100%', height='400px', loading='lazy', title='Office Location Map', wrapped in responsive container div; (6) Large WhatsApp CTA section below map with heading 'Get in Touch via WhatsApp' and button linking to https://wa.me/919482929768 with gold filled styling."
-        }
-      ]
-    },
-    {
-      "id": "REQ-24",
-      "summary": "Apply the premium visual theme consistently across all React page components using Tailwind CSS and a shared global stylesheet with gold accents, custom fonts, glassmorphism styling, scroll reveal animations, 3D tilt effects, and mobile-first responsive layout.",
-      "acceptanceCriteria": [
-        "Gold (#d4af37) accents appear on borders, underlines, badges, and hover states across all pages",
-        "Playfair Display is applied to all headings",
-        "Inter is applied to body text",
-        "Glassmorphism styling is visible on stat cards and quote blocks",
-        "3D tilt effect works on service cards when hovered",
-        "Layout is responsive and usable on mobile screens"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Extend the existing global stylesheet to include: (1) Google Fonts import for Playfair Display (weights 400, 700) and Inter (weights 400, 500, 600, 700) at the top; (2) Apply Playfair Display to all heading elements (h1, h2, h3, h4, h5, h6) and Inter to body text; (3) Set html { scroll-behavior: smooth }; (4) Define CSS custom properties for gold color (--gold: #d4af37) and other theme colors; (5) Define reusable utility classes for glassmorphism styling (.glassmorphism with backdrop-filter: blur(10px), semi-transparent background, subtle border); (6) Define keyframes and animation classes for scroll reveal effects (.fade-in-up with opacity 0 to 1 and translateY); (7) Define utility classes for 3D tilt perspective effects (.tilt-container with perspective: 1000px); (8) Ensure all color references use Tailwind's extend config or CSS variables for gold accents."
-        },
-        {
-          "path": "frontend/tailwind.config.js",
-          "operation": "modify",
-          "description": "Extend the existing Tailwind configuration to include: (1) Custom color 'gold' with value '#d4af37' in the theme.extend.colors object; (2) Custom font families: 'playfair' mapping to ['Playfair Display', 'serif'] and 'inter' mapping to ['Inter', 'sans-serif'] in theme.extend.fontFamily; (3) Ensure the extended config supports glassmorphism utilities (backdrop-filter plugin is already included); (4) Add any custom animation keyframes needed for pulse effects on WhatsApp button in theme.extend.animation if not already present."
-        },
-        {
-          "path": "frontend/src/components/SEO.tsx",
-          "operation": "create",
-          "description": "Create a reusable SEO component that accepts props (title: string, description: string, keywords?: string, ogImage?: string, jsonLd?: object) and renders React Helmet with: (1) title tag, (2) meta description, (3) meta keywords if provided, (4) Open Graph tags (og:title, og:description, og:type, og:image if provided), (5) JSON-LD structured data script tag if jsonLd prop is provided. This component will be imported and used by all page components to ensure consistent SEO meta tags."
+          "description": "In the 'Book Now' button onClick handler, add window.scrollTo(0, 0) after navigate('/appointment') to ensure scroll-to-top behavior is applied immediately. Ensure all Link components in the navbar navigation do not interfere with the router-level scroll restoration added in App.tsx."
         }
       ]
     }

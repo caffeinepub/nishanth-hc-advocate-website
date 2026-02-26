@@ -1,5 +1,7 @@
 import { Link } from '@tanstack/react-router';
-import { Phone, Mail, MapPin, Scale } from 'lucide-react';
+import { Phone, Mail, MapPin } from 'lucide-react';
+
+const LOGO_URL = 'https://i.postimg.cc/RV0rRf2D/Whats-App-Image-2026-02-26-at-7-46-51-PM.jpg';
 
 const navLinks = [
   { path: '/' as const, label: 'Home' },
@@ -16,34 +18,45 @@ export default function Footer() {
   );
 
   return (
-    <footer className="bg-site-dark border-t border-gold/20">
+    <footer style={{ backgroundColor: '#f8f9fb', borderTop: '1px solid rgba(212,175,55,0.25)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 rounded-full bg-gold flex items-center justify-center">
-                <Scale className="w-5 h-5 text-site-dark" />
-              </div>
-              <div>
+            <div className="mb-4">
+              <img
+                src={LOGO_URL}
+                alt="NHC Advocate — Nishanth H C"
+                style={{ height: '52px', width: 'auto', objectFit: 'contain' }}
+                onError={(e) => {
+                  const target = e.currentTarget as HTMLImageElement;
+                  target.style.display = 'none';
+                  const fallback = target.nextElementSibling as HTMLElement | null;
+                  if (fallback) fallback.style.display = 'block';
+                }}
+              />
+              <div className="hidden">
                 <div className="font-playfair font-bold text-gold text-base">NHC Advocate</div>
-                <div className="text-xs text-gray-400 font-inter">Nishanth H C</div>
+                <div className="text-xs font-inter" style={{ color: '#555555' }}>Nishanth H C</div>
               </div>
             </div>
-            <p className="text-gray-400 text-sm font-inter leading-relaxed">
+            <p className="text-sm font-inter leading-relaxed" style={{ color: '#555555' }}>
               Providing trusted legal services in Chikkamagaluru, Karnataka with dedication and integrity.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-playfair font-bold text-gold text-base mb-4">Quick Links</h3>
+            <h3 className="font-playfair font-bold text-base mb-4" style={{ color: '#1a1a1a' }}>
+              Quick Links
+            </h3>
             <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-gray-400 hover:text-gold text-sm font-inter transition-colors"
+                    className="text-sm font-inter transition-colors hover:text-gold"
+                    style={{ color: '#555555' }}
                   >
                     {link.label}
                   </Link>
@@ -54,29 +67,33 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="font-playfair font-bold text-gold text-base mb-4">Contact</h3>
+            <h3 className="font-playfair font-bold text-base mb-4" style={{ color: '#1a1a1a' }}>
+              Contact
+            </h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-gold mt-0.5 flex-shrink-0" />
-                <span className="text-gray-400 text-sm font-inter leading-relaxed">
+                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-gold" />
+                <span className="text-sm font-inter leading-relaxed" style={{ color: '#555555' }}>
                   Nishanth HC Advocate, #T, 6th Cross Road, Block 9, Ward No 2, Vasathi Badavane,
                   Hiremgaluru, Chikkamagaluru, Karnataka, India
                 </span>
               </li>
               <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-gold flex-shrink-0" />
+                <Phone className="w-4 h-4 flex-shrink-0 text-gold" />
                 <a
                   href="tel:+919482929768"
-                  className="text-gray-400 hover:text-gold text-sm font-inter transition-colors"
+                  className="text-sm font-inter transition-colors hover:text-gold"
+                  style={{ color: '#555555' }}
                 >
                   +91 94829 29768
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-gold flex-shrink-0" />
+                <Mail className="w-4 h-4 flex-shrink-0 text-gold" />
                 <a
                   href="mailto:adv.nishanthhc@gmail.com"
-                  className="text-gray-400 hover:text-gold text-sm font-inter transition-colors"
+                  className="text-sm font-inter transition-colors hover:text-gold"
+                  style={{ color: '#555555' }}
                 >
                   adv.nishanthhc@gmail.com
                 </a>
@@ -85,11 +102,14 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gold/20 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-gray-500 text-sm font-inter text-center">
+        <div
+          className="mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3"
+          style={{ borderTop: '1px solid rgba(212,175,55,0.2)' }}
+        >
+          <p className="text-sm font-inter text-center" style={{ color: '#888888' }}>
             © {year} Nishanth HC Advocate. All Rights Reserved.
           </p>
-          <p className="text-gray-500 text-sm font-inter text-center">
+          <p className="text-sm font-inter text-center" style={{ color: '#888888' }}>
             Built with <span className="text-gold">♥</span> using{' '}
             <a
               href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${appId}`}

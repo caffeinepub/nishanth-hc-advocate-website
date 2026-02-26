@@ -1,4 +1,5 @@
-import { createRouter, createRootRoute, createRoute, RouterProvider, Outlet } from '@tanstack/react-router';
+import { createRouter, createRootRoute, createRoute, RouterProvider, Outlet, useRouterState } from '@tanstack/react-router';
+import { useEffect } from 'react';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import About from './pages/About';
@@ -6,8 +7,21 @@ import Cases from './pages/Cases';
 import Appointment from './pages/Appointment';
 import Contact from './pages/Contact';
 
+function ScrollToTop() {
+  const routerState = useRouterState();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [routerState.location.pathname]);
+  return null;
+}
+
 const rootRoute = createRootRoute({
-  component: () => <Layout />,
+  component: () => (
+    <>
+      <ScrollToTop />
+      <Layout />
+    </>
+  ),
 });
 
 const indexRoute = createRoute({
